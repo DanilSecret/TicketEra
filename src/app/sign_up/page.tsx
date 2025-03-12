@@ -40,7 +40,7 @@ export default function Sign_form() {
             const { success, message} = await registerUser(data.username, data.password, data.email);
 
             if (success) {
-                router.push('/');
+                router.push('/sign_in/');
             } else {
                 setMessage(message || "Ошибка авторизации");
             }
