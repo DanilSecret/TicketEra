@@ -45,7 +45,7 @@ export default function Sign_form() {
                 setMessage(message || "Ошибка авторизации");
             }
         }catch (error) {
-            setMessage("Ошибка входа");
+            setMessage(`${error}`);
         }
     };
 

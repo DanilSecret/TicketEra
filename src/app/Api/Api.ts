@@ -11,7 +11,7 @@ export default async function registerUser(username: string, password: string, e
         const result = await response.json();
         return { success: response.ok, message: result.message };
     } catch (error) {
-        console.error("Ошибка при отправке данных:", error);
+        console.error("Ошибка при регистрации:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
@@ -28,6 +28,38 @@ export async function authUser(username: string, password: string) {
         return { success: response.ok, message: result.message };
     }catch (error) {
         console.error("Ошибка при авторизации:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function getAllTopics(){
+    try {
+        const response = await fetch(`/api/getTopics`,{
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
+        const result = await response.json();
+        return result;
+    }catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function createTicket(title: string, description: string, topic_id: number, auth_token: string) {
+    try {
+        const response = await fetch("/api/createTicket", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ title, description, topic_id }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }

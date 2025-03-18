@@ -31,7 +31,7 @@ export default function Login_form() {
                 setMessage(message || "Ошибка авторизации");
             }
         }catch (error) {
-            setMessage("Ошибка входа");
+            setMessage(`${error}`);
         }
     };
 
@@ -52,7 +52,7 @@ export default function Login_form() {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                         Пароль
                     </label>
                     <input type="password" {...register("password")}
