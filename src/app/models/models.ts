@@ -20,6 +20,13 @@ export interface TopicInterface {
     name:string;
 }
 
+export interface UserProfileInterface {
+    uuid:string;
+    username: string;
+    email:string;
+    role:string;
+}
+
 export interface TicketInterface {
     uuid: string;
     title: string;
