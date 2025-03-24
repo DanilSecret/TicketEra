@@ -43,11 +43,16 @@ export default function CreateTicketForm() {
 
     useEffect(() => {
         const allTopics = async () => {
-            const topics = await getAllTopics();
-            setTopicData(topics.result);
+            const response = await getAllTopics();
+            if (response.success && response.result) {
+                setTopicData(response.result);
+            } else {
+                setMessage(response.message || "Не удалось загрузить темы");
+            }
         };
         allTopics();
     }, []);
+
 
     return (
         <div className="flex items-center justify-center text-center min-h-screen bg-gray-100 text-black">

@@ -39,7 +39,7 @@ export async function getAllTopics(){
             headers: { "Content-Type": "application/json" },
         });
         const result = await response.json();
-        return result;
+        return {success: response.ok, result: result.result};
     }catch (error) {
         console.error("Ошибка при отправке данных:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
@@ -59,6 +59,24 @@ export async function createTicket(title: string, description: string, topic_id:
         const result = await response.json();
         return { success: response.ok, message: result.message };
     } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function GetTicketsByUser(auth_token: string){
+    try {
+        const response = await fetch("/api/getUserTickets", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            }
+
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
         console.error("Ошибка при отправке данных:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
     }

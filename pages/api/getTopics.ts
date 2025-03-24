@@ -3,7 +3,7 @@
 import pool from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function getTopics(req: NextApiRequest, res: NextApiResponse) {
+export default async function GetTopics(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         try {
             const result = await pool.query('SELECT * FROM topic');

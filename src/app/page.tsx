@@ -9,6 +9,8 @@ export default function Home() {
             <p></p>
             <Link href="/sign_in/">Авторизация</Link>
             <p></p>
+            <Link href="/user_profile/">Профиль пользователя</Link>
+            <p></p>
             <Link href="/create_ticket/">Создать заявку</Link>
         </div>
     )

@@ -4,14 +4,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import pool from "@/lib/db";
 import jwt from "jsonwebtoken";
 import {v4 as uuidv4} from "uuid";
+import {JwtPayload} from "@/app/models/models";
 
 const JWT_SECRET = process.env.JWT_SECRET || "ошибка";
 
-interface JwtPayload {
-    userUuid: string;
-    username: string;
-    userEmail: string;
-}
+
 
 export default async function CreateTicket(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {

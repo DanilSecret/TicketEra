@@ -19,3 +19,22 @@ export interface TopicInterface {
     id:number;
     name:string;
 }
+
+export interface TicketInterface {
+    uuid: string;
+    title: string;
+    description: string;
+    topic_id: string;
+    author_uuid: string;
+    create_at: Date;
+    status_id: string;
+    author: string;
+    author_email: string;
+
+}
+
+export interface JwtPayload {
+    userUuid: string;
+    username: string;
+    userEmail: string;
+}
