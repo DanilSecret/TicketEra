@@ -58,7 +58,8 @@ export default function UserProfile() {
 
                 {loadingUser ? (
                     <div className="flex justify-center items-center py-10">
-                        <div className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
+                        <div
+                            className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
                     </div>
                 ) : userdata ? (
                     <div className="bg-gray-50 p-5 rounded-lg shadow-sm mb-6 border border-gray-300">
@@ -72,10 +73,11 @@ export default function UserProfile() {
                 ) : (
                     <p className="text-gray-600 text-center text-lg">Не удалось загрузить информацию о пользователе.</p>
                 )}
-
+                <h2 className="text-2xl font-bold text-black mb-6 text-center">Заявки:</h2>
                 {loadingTickets ? (
                     <div className="flex justify-center items-center py-10">
-                        <div className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
+                        <div
+                            className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
                     </div>
                 ) : data.length === 0 ? (
                     <p className="text-gray-700 text-center text-lg">У вас пока нет заявок.</p>
@@ -93,12 +95,16 @@ export default function UserProfile() {
                                         <p><strong>Тема:</strong> {ticket.topic_id}</p>
                                         <p>
                                             <strong>Дата: </strong>
-                                            {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", { dateStyle: 'long', timeStyle: 'short' }) : "Неизвестно"}
+                                            {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", {
+                                                dateStyle: 'long',
+                                                timeStyle: 'short'
+                                            }) : "Неизвестно"}
                                         </p>
                                     </div>
 
                                     <div className="mt-3">
-                                        <span className="px-3 py-1 rounded-full text-white bg-blue-600 text-sm font-medium">
+                                        <span
+                                            className="px-3 py-1 rounded-full text-white bg-blue-600 text-sm font-medium">
                                             Статус: {ticket.status_id}
                                         </span>
                                     </div>
