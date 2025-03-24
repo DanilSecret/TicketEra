@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { TicketInterface } from "@/app/models/models";
 import { GetTicketsByUser } from "@/app/Api/Api";
+import Link from "next/link";
 
 export default function UserProfile() {
     const [cookies] = useCookies(["auth_token"]);
@@ -36,27 +37,29 @@ export default function UserProfile() {
                 ) : (
                     <div className="space-y-4">
                         {data.map((ticket) => (
-                            <div
-                                key={ticket.uuid}
-                                className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all"
-                            >
-                                <h2 className="text-xl font-bold text-black">{ticket.title}</h2>
-                                <p className="text-gray-800 text-sm mt-1">{ticket.description}</p>
+                            <Link key={ticket.uuid} href={ticket.uuid}>
+                                <div
+                                    key={ticket.uuid}
+                                    className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all"
+                                >
+                                    <h2 className="text-xl font-bold text-black">{ticket.title}</h2>
+                                    <p className="text-gray-800 text-sm mt-1">{ticket.description}</p>
 
-                                <div className="mt-3 text-sm text-gray-600">
-                                    <p><strong>Тема:</strong> {ticket.topic_id}</p>
-                                    <p>
-                                        <strong>Дата: </strong>
-                                        {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", { dateStyle: 'long', timeStyle: 'short' }) : "Неизвестно"}
-                                    </p>
-                                </div>
+                                    <div className="mt-3 text-sm text-gray-600">
+                                        <p><strong>Тема:</strong> {ticket.topic_id}</p>
+                                        <p>
+                                            <strong>Дата: </strong>
+                                            {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", { dateStyle: 'long', timeStyle: 'short' }) : "Неизвестно"}
+                                        </p>
+                                    </div>
 
-                                <div className="mt-3">
-                                    <span className="px-3 py-1 rounded-full text-white bg-blue-600 text-sm font-medium">
-                                        Статус: {ticket.status_id}
-                                    </span>
+                                    <div className="mt-3">
+                                        <span className="px-3 py-1 rounded-full text-white bg-blue-600 text-sm font-medium">
+                                            Статус: {ticket.status_id}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 )}
