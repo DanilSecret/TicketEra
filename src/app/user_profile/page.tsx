@@ -11,6 +11,7 @@ export default function UserProfile() {
     const [message, setMessage] = useState<string | null>(null);
     const [data, setData] = useState<TicketInterface[]>([]);
 
+
     useEffect(() => {
         const GetUserTickets = async () => {
             const response = await GetTicketsByUser(cookies.auth_token);
@@ -40,10 +41,9 @@ export default function UserProfile() {
                             <Link key={ticket.uuid} href={ticket.uuid}>
                                 <div
                                     key={ticket.uuid}
-                                    className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all"
+                                    className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all mb-3"
                                 >
                                     <h2 className="text-xl font-bold text-black">{ticket.title}</h2>
-                                    <p className="text-gray-800 text-sm mt-1">{ticket.description}</p>
 
                                     <div className="mt-3 text-sm text-gray-600">
                                         <p><strong>Тема:</strong> {ticket.topic_id}</p>
