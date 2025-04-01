@@ -84,7 +84,7 @@ export default function UserProfile() {
                 ) : (
                     <div className="space-y-4">
                         {data.map((ticket) => (
-                            <Link key={ticket.uuid} href={ticket.uuid}>
+                            <Link key={ticket.uuid} href={`/ticket_page/${ticket.uuid}`}>
                                 <div
                                     key={ticket.uuid}
                                     className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all mb-3"

@@ -99,3 +99,19 @@ export async function GetTicketsByUser(auth_token: string){
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
+
+export async function GetTicketById(id: string){
+    try {
+        const response = await fetch(`/api/getTicketById?id=${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
