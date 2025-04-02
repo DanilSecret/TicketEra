@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {CreateTicketFormData, TopicInterface} from "@/app/models/models";
 import { useCookies } from "react-cookie";
-import {createTicket, getAllTopics} from "@/app/Api/Api";
+import {CreateTicket, GetAllTopics} from "@/app/Api/Api";
 
 
 const validationSchema = Yup.object().shape({
@@ -29,7 +29,7 @@ export default function CreateTicketForm() {
     const onSubmit = async (data: CreateTicketFormData) => {
         try {
             const formattedData: CreateTicketFormData = {...data, topic_id: Number(data.topic_id)};
-            const { success, message } = await createTicket(formattedData.title, formattedData.description, formattedData.topic_id, cookies.auth_token);
+            const { success, message } = await CreateTicket(formattedData.title, formattedData.description, formattedData.topic_id, cookies.auth_token);
 
             if (success) {
                 router.push('/');
@@ -43,7 +43,7 @@ export default function CreateTicketForm() {
 
     useEffect(() => {
         const allTopics = async () => {
-            const response = await getAllTopics();
+            const response = await GetAllTopics();
             if (response.success && response.result) {
                 setTopicData(response.result);
             } else {

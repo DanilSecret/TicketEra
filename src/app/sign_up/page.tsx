@@ -3,7 +3,7 @@
 import { useState } from "react";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import registerUser from "../Api/Api";
+import RegisterUser from "../Api/Api";
 import { RegisterFormData } from "../models/models";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,7 +37,7 @@ export default function Sign_form() {
 
     const onSubmit = async (data: RegisterFormData) => {
         try {
-            const { success, message} = await registerUser(data.username, data.password, data.email);
+            const { success, message} = await RegisterUser(data.username, data.password, data.email);
 
             if (success) {
                 router.push('/sign_in/');

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginFormData } from "../models/models";
-import { authUser } from "../Api/Api";
+import { AuthUser } from "../Api/Api";
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().min(3, 'Имя пользователя должно содержать минимум 3 символа').required('Имя пользователя обязательно'),
@@ -23,7 +23,7 @@ export default function Login_form() {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
-            const { success, message} = await authUser(data.username, data.password);
+            const { success, message} = await AuthUser(data.username, data.password);
 
             if (success) {
                 router.push('/');

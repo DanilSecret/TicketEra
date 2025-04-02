@@ -1,6 +1,6 @@
 "use client"
 
-export default async function registerUser(username: string, password: string, email: string) {
+export default async function RegisterUser(username: string, password: string, email: string) {
     try {
         const response = await fetch("/api/sign_up", {
             method: "POST",
@@ -16,7 +16,7 @@ export default async function registerUser(username: string, password: string, e
     }
 }
 
-export async function authUser(username: string, password: string) {
+export async function AuthUser(username: string, password: string) {
     try {
         const response = await fetch(`/api/sign_in`, {
             method: "POST",
@@ -32,7 +32,7 @@ export async function authUser(username: string, password: string) {
     }
 }
 
-export async function getAllTopics(){
+export async function GetAllTopics(){
     try {
         const response = await fetch(`/api/getTopics`,{
             method: "GET",
@@ -46,7 +46,7 @@ export async function getAllTopics(){
     }
 }
 
-export async function createTicket(title: string, description: string, topic_id: number, auth_token: string) {
+export async function CreateTicket(title: string, description: string, topic_id: number, auth_token: string) {
     try {
         const response = await fetch("/api/createTicket", {
             method: "POST",
