@@ -147,3 +147,20 @@ export async function ChangeTicketStatus(ticket_uuid:string, status_id: number, 
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
+
+export async function DeleteTicket(ticket_uuid:string){
+    try {
+        const response = await fetch(`/api/deleteTicket`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ticket_uuid }),
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
