@@ -24,13 +24,15 @@ export default async function GetTicketById(req: NextApiRequest, res: NextApiRes
             const topicResult = await pool.query("SELECT name FROM topic WHERE id = $1", [ticket.topic_id]);
             const topicName = topicResult.rows.length > 0 ? topicResult.rows[0].name : "Неизвестно";
 
-            const statusResult = await pool.query("SELECT name FROM status WHERE id = $1", [ticket.status_id]);
+            const statusResult = await pool.query("SELECT name, color FROM status WHERE id = $1", [ticket.status_id]);
             const statusName = statusResult.rows.length > 0 ? statusResult.rows[0].name : "Неизвестно";
+            const statusColor = statusResult.rows.length > 0 ? statusResult.rows[0].color : "Неизвестно";
 
             return {
                 ...ticket,
                 topic_id: topicName,
                 status_id: statusName,
+                status_color: statusColor,
             };
         }));
         return res.status(200).json({ success: true, result: ticketsWithNames });

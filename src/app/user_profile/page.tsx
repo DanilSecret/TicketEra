@@ -103,7 +103,7 @@ export default function UserProfile() {
 
                                     <div className="mt-3">
                                         <span
-                                            className="px-3 py-1 rounded-full text-white bg-blue-600 text-sm font-medium">
+                                            className={`px-3 py-1 rounded-full text-white text-sm font-medium`} style={{ backgroundColor: ticket.status_color }}>
                                             Статус: {ticket.status_id}
                                         </span>
                                     </div>

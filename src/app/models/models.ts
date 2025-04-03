@@ -46,7 +46,7 @@ export interface TicketInterface {
     status_id: string;
     author: string;
     author_email: string;
-
+    status_color: string;
 }
 
 export interface JwtPayload {

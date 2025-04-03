@@ -94,7 +94,7 @@ export default function TicketPage() {
                             <p className="text-gray-600">
                                 <strong>Статус:</strong>
                                 <span
-                                    className="px-3 py-1 ml-2 rounded-full text-white bg-blue-600 text-sm font-medium">
+                                    className="px-3 py-1 ml-2 rounded-full text-white text-sm font-medium" style={{ backgroundColor: ticket.status_color }}>
                                     {ticket.status_id}
                                 </span>
                             </p>
