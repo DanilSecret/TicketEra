@@ -4,7 +4,7 @@ import pool from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 
-export default async function GetUserTickets(req: NextApiRequest, res: NextApiResponse) {
+export default async function GetTicketById(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") {
         return res.status(405).json({ message: "Метод не разрешен" });
     }
@@ -33,7 +33,6 @@ export default async function GetUserTickets(req: NextApiRequest, res: NextApiRe
                 status_id: statusName,
             };
         }));
-        console.log(ticketsWithNames)
         return res.status(200).json({ success: true, result: ticketsWithNames });
     } catch (error) {
         console.error("Ошибка при получении заявок:", error);

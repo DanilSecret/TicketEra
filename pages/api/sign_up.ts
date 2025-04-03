@@ -5,7 +5,7 @@ import pool from '@/lib/db';
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function Sign_up(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Метод не поддерживается' });
     }

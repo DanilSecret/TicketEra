@@ -46,7 +46,6 @@ export default function UserProfile() {
         GetUserTickets();
     }, [cookies.auth_token]);
 
-    console.log(userdata)
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
@@ -83,7 +82,7 @@ export default function UserProfile() {
                     <p className="text-gray-700 text-center text-lg">У вас пока нет заявок.</p>
                 ) : (
                     <div className="space-y-4">
-                        {data.map((ticket) => (
+                        {data.slice().reverse().map((ticket) => (
                             <Link key={ticket.uuid} href={`/ticket_page/${ticket.uuid}`}>
                                 <div
                                     key={ticket.uuid}

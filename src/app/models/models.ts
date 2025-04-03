@@ -15,6 +15,15 @@ export interface CreateTicketFormData {
     topic_id: number;
 }
 
+export interface ChangeStatusFormData {
+    status_id: number;
+}
+
+export interface StatusInterface {
+    id:number;
+    name:string;
+}
+
 export interface TopicInterface {
     id:number;
     name:string;
@@ -44,4 +53,5 @@ export interface JwtPayload {
     userUuid: string;
     username: string;
     userEmail: string;
+    userRole: string;
 }

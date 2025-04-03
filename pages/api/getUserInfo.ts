@@ -7,7 +7,7 @@ import { JwtPayload } from "@/app/models/models";
 
 const JWT_SECRET = process.env.JWT_SECRET || "ошибка";
 
-export default async function GetUserTickets(req: NextApiRequest, res: NextApiResponse) {
+export default async function GetUserInfo(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") {
         return res.status(405).json({ message: "Метод не разрешен" });
     }
@@ -32,7 +32,6 @@ export default async function GetUserTickets(req: NextApiRequest, res: NextApiRe
             return res.status(400).json({ message: "Пользователь не найден" });
         }
 
-        console.log(result.rows[0])
 
         return res.status(200).json({ success: true, result: result.rows[0]});
     } catch (error) {
