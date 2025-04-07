@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginFormData } from "../models/models";
 import { AuthUser } from "../Api/Api";
+import {useUserStore} from "@/store/user_store";
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().min(3, 'Имя пользователя должно содержать минимум 3 символа').required('Имя пользователя обязательно'),
@@ -16,16 +17,19 @@ const validationSchema = Yup.object().shape({
 export default function Login_form() {
     const [message, setMessage] = useState<string | null>(null);
     const router = useRouter();
+    const {setUserData, setIsAuth} = useUserStore();
 
     const { register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(validationSchema)
     })
 
     const onSubmit = async (data: LoginFormData) => {
-        try {
-            const { success, message} = await AuthUser(data.username, data.password);
 
+        try {
+            const { success, message, result} = await AuthUser(data.username, data.password);
             if (success) {
+                setIsAuth(true)
+                setUserData(result.rows[0])
                 router.push('/');
             } else {
                 setMessage(message || "Ошибка авторизации");

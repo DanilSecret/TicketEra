@@ -17,6 +17,7 @@ export default async function RegisterUser(username: string, password: string, e
 }
 
 export async function AuthUser(username: string, password: string) {
+
     try {
         const response = await fetch(`/api/sign_in`, {
             method: "POST",
@@ -25,7 +26,7 @@ export async function AuthUser(username: string, password: string) {
         });
 
         const result = await response.json();
-        return { success: response.ok, message: result.message };
+        return { success: response.ok, message: result.message, result: result.result };
     }catch (error) {
         console.error("Ошибка при авторизации:", error);
         return { success: false, message: "Ошибка соединения с сервером" };

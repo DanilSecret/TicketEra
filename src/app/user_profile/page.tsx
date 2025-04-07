@@ -2,23 +2,29 @@
 
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { TicketInterface, UserProfileInterface } from "@/app/models/models";
-import { GetTicketsByUser, GetUserProfInf, DeleteTicket } from "@/app/Api/Api";
+import { TicketInterface} from "@/app/models/models";
+import { GetTicketsByUser, DeleteTicket } from "@/app/Api/Api";
 import dleteimg from "@/app/assets/delete.svg";
 import Link from "next/link";
 import Image from "next/image";
+import {useUserStore} from "@/store/user_store";
+import {useRouter} from "next/navigation";
 
 
 export default function UserProfile() {
     const [cookies] = useCookies(["auth_token"]);
     const [message, setMessage] = useState<string | null>(null);
-    const [umessage, setUMessage] = useState<string | null>(null);
     const [data, setData] = useState<TicketInterface[]>([]);
-    const [userdata, setUserdata] = useState<UserProfileInterface | null>(null);
     const [loadingTickets, setLoadingTickets] = useState(true);
-    const [loadingUser, setLoadingUser] = useState(true);
+    const router = useRouter();
+
+    const userData = useUserStore((state) => state.userData?.rows[0]);
 
     useEffect(() => {
+        if(!cookies){
+            router.push('/');
+        }
+
         const GetUserTickets = async () => {
             setLoadingTickets(true);
             const response = await GetTicketsByUser(cookies.auth_token);
@@ -31,20 +37,6 @@ export default function UserProfile() {
             }
             setLoadingTickets(false);
         };
-
-        const GetUserInf = async () => {
-            setLoadingUser(true);
-            const response = await GetUserProfInf(cookies.auth_token);
-            if (response.success && response.result) {
-                setUserdata(response.result);
-            } else {
-                setUserdata(null);
-                setUMessage(response.message || "Не удалось загрузить профиль");
-            }
-            setLoadingUser(false);
-        };
-
-        GetUserInf();
         GetUserTickets();
     }, [cookies.auth_token]);
 
@@ -56,25 +48,19 @@ export default function UserProfile() {
             setMessage(message || "Не удалось удалить заявку");
         }
     };
-
     return (
         <div className="min-h-screen bg-gray-100 p-6">
             <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-black mb-6 text-center">Мой профиль и заявки</h1>
-                {umessage && <p className="text-red-500 text-center">{umessage}</p>}
                 {message && <p className="text-red-500 text-center">{message}</p>}
 
-                {loadingUser ? (
-                    <div className="flex justify-center items-center py-10">
-                        <div className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
-                    </div>
-                ) : userdata ? (
+                {userData ? (
                     <div className="bg-gray-50 p-5 rounded-lg shadow-sm mb-6 border border-gray-300">
                         <h2 className="text-xl font-semibold text-black">Информация о пользователе</h2>
                         <div className="mt-3 text-sm text-gray-600">
-                            <p><strong>Никнейм:</strong> {userdata.username}</p>
-                            <p><strong>Почта:</strong> {userdata.email}</p>
-                            <p><strong>Роль:</strong> {userdata.role}</p>
+                            <p><strong>Никнейм:</strong> {userData.username}</p>
+                            <p><strong>Почта:</strong> {userData.email}</p>
+                            <p><strong>Роль:</strong> {userData.role}</p>
                         </div>
                     </div>
                 ) : (

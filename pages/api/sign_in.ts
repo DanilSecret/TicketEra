@@ -55,7 +55,7 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
 
         // Устанавливаем cookie и возвращаем успешный ответ
         res.setHeader("Set-Cookie", serializedCookie);
-        res.status(200).json({ message: "Вход выполнен успешно", redirectUrl: "/" });
+        res.status(200).json({ message: "Вход выполнен успешно", result: result });
     } catch (error) {
         console.error("Ошибка при авторизации:", error);
         res.status(500).json({ message: "Внутренняя ошибка сервера" });
