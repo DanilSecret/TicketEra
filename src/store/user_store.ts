@@ -2,15 +2,11 @@ import { create } from "zustand";
 import { persist } from 'zustand/middleware'
 
 type UserData = {
-    command: string;
-    rowCount: number;
-    rows: {
-        uuid: string;
-        username: string;
-        role: string;
-        email: string;
-        responsibility: number | null;
-    }[];
+    uuid: string;
+    username: string;
+    role: string;
+    email: string;
+    responsibility: number | null;
 } | null;
 
 type UserState = {

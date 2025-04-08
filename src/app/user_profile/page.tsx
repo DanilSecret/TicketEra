@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { TicketInterface} from "@/app/models/models";
 import { GetTicketsByUser, DeleteTicket } from "@/app/Api/Api";
-import dleteimg from "@/app/assets/delete.svg";
+import deleteImg from "@/app/assets/delete.svg";
 import Link from "next/link";
 import Image from "next/image";
 import {useUserStore} from "@/store/user_store";
@@ -18,11 +18,11 @@ export default function UserProfile() {
     const [loadingTickets, setLoadingTickets] = useState(true);
     const router = useRouter();
 
-    const userData = useUserStore((state) => state.userData?.rows[0]);
+    const userData = useUserStore((state) => state.userData);
 
     useEffect(() => {
-        if(!cookies){
-            router.push('/');
+        if(!cookies.auth_token){
+            router.push('/sign_in/');
         }
 
         const GetUserTickets = async () => {
@@ -99,7 +99,7 @@ export default function UserProfile() {
                                     onClick={() => handleDelete(ticket.uuid)}
                                     className="absolute top-2 right-2 text-white px-2 py-1 rounded-lg text-sm hover:bg-gray-200 transition"
                                 >
-                                    <Image className="w-[20px]" src={dleteimg} alt={"delete"}/>
+                                    <Image className="w-[20px]" src={deleteImg} alt={"delete"}/>
                                 </button>
                             </div>
                         ))}
