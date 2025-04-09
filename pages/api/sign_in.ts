@@ -39,6 +39,7 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
             username: userData.username,
             userEmail: userData.email,
             userRole: userData.role,
+            userResp: userData.responsibility || null,
         };
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!, {
             expiresIn: "1d",

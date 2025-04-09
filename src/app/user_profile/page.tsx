@@ -21,23 +21,25 @@ export default function UserProfile() {
     const userData = useUserStore((state) => state.userData);
 
     useEffect(() => {
-        if(!cookies.auth_token){
+        if (!cookies.auth_token || userData === null) {
             router.push('/sign_in/');
+
+        } else {
+            const GetUserTickets = async () => {
+                setLoadingTickets(true);
+                const response = await GetTicketsByUser(cookies.auth_token);
+
+                if (response.success && Array.isArray(response.result)) {
+                    setData(response.result);
+                } else {
+                    setData([]);
+                    setMessage(response.message || "Не удалось загрузить заявки");
+                }
+                setLoadingTickets(false);
+            };
+            GetUserTickets();
         }
 
-        const GetUserTickets = async () => {
-            setLoadingTickets(true);
-            const response = await GetTicketsByUser(cookies.auth_token);
-
-            if (response.success && Array.isArray(response.result)) {
-                setData(response.result);
-            } else {
-                setData([]);
-                setMessage(response.message || "Не удалось загрузить заявки");
-            }
-            setLoadingTickets(false);
-        };
-        GetUserTickets();
     }, [cookies.auth_token]);
 
     const handleDelete = async (uuid: string) => {

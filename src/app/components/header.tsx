@@ -7,10 +7,12 @@ import user from "@/app/assets/user.svg"
 import Cookies from "js-cookie";
 import {useUserStore} from "@/store/user_store";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export function Header() {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isUserMenuOpen, setUserMenuOpen] = useState(false);
+    const router = useRouter()
 
     const isAuth = useUserStore((state) => state.isAuth);
     const {setUserData, setIsAuth} = useUserStore();
@@ -18,9 +20,10 @@ export function Header() {
 
     const destroyCookie = () => {
         Cookies.remove("auth_token");
-        window.location.reload();
         setUserData(null);
         setIsAuth(false);
+        setUserMenuOpen(!isUserMenuOpen)
+        router.push('/')
     };
 
     return (
@@ -32,7 +35,22 @@ export function Header() {
                     </Link>
                     <nav className="hidden md:flex items-center gap-4 text-sm">
                         <Link href="/" className="hover:underline">Главная</Link>
-                        <Link href="/create_ticket/" className="hover:underline">Создать заявку</Link>
+
+                        { userData?.role === "admin" ? (
+                            <div className="hidden md:flex items-center gap-4 text-sm">
+                                <Link href="/create_ticket/" className="hover:underline">Создать заявку</Link>
+                                <Link href="/tickets_list/" className="hover:underline">Лист заявок</Link>
+                                <Link href="/tickets_history/" className="hover:underline">История заявок</Link>
+                            </div>
+                        ): userData?.role === "worker" ? (
+                            <div className="hidden md:flex items-center gap-4 text-sm">
+                                <Link href="/tickets_list/" className="hover:underline">Лист заявок</Link>
+                                <Link href="/tickets_history/" className="hover:underline">История заявок</Link>
+                            </div>
+                        ) : (
+                            <Link href="/create_ticket/" className="hover:underline">Создать заявку</Link>
+                        )}
+
                     </nav>
                 </div>
                 <div className="flex items-center gap-4 relative">
@@ -78,12 +96,26 @@ export function Header() {
             {isMobileMenuOpen && (
                 <nav className="md:hidden mt-2 space-y-2">
                     <Link href="/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Главная</Link>
-                    <Link href="/create_ticket/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Создать заявку</Link>
+
+                    { userData?.role === "admin" ? (
+                        <div className="space-y-2">
+                            <Link href="/create_ticket/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Создать заявку</Link>
+                            <Link href="/tickets_list/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Лист заявок</Link>
+                            <Link href="/tickets_history/" className="block px-4 py-2 hover:bg-[#1a1f4d]">История заявок</Link>
+                        </div>
+                    ): userData?.role === "worker" ? (
+                        <div className="space-y-2">
+                            <Link href="/tickets_list/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Лист заявок</Link>
+                            <Link href="/tickets_history/" className="block px-4 py-2 hover:bg-[#1a1f4d]">История заявок</Link>
+                        </div>
+                    ):(
+                        <Link href="/create_ticket/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Создать заявку</Link>
+                    )}
                     {isAuth ? (
                         <div className="space-y-2">
                             <Link href="/user_profile/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Профиль</Link>
-                            <div className="block px-4 py-2 hover:bg-[#1a1f4d]">
-                                <button onClick={destroyCookie}>Выйти</button>
+                            <div className="block px-4 py-2 w-full hover:bg-[#1a1f4d]">
+                                <button className="w-full text-left" onClick={destroyCookie}>Выйти</button>
                             </div>
 
                         </div>

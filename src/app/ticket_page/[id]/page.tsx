@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
+import {useUserStore} from "@/store/user_store";
 
 
 const validationSchema = Yup.object().shape({
@@ -31,32 +32,39 @@ export default function TicketPage() {
     const { register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(validationSchema)
     })
+    const userData = useUserStore((state) => state.userData);
 
     useEffect(() => {
         if (!params || !params.id) return;
 
-        const fetchTicket = async () => {
-            setLoading(true);
-            const response = await GetTicketById(params.id as string);
+        if (!cookies.auth_token || userData === null) {
+            router.push("/sign_in/");
 
-            if (response.success && response.result) {
-                setTicket(response.result[0]);
-            } else {
-                setError(response.message || "Не удалось загрузить заявку");
-            }
-            setLoading(false);
-        };
+        } else {
+            const fetchTicket = async () => {
+                setLoading(true);
+                const response = await GetTicketById(params.id as string);
 
-        const fetchallStatus = async () => {
-            const response = await GetAllStatus();
-            if (response.success && response.result) {
-                setStatusData(response.result);
-            } else {
-                setMessage(response.message || "Не удалось загрузить статусы");
-            }
-        };
-        fetchTicket();
-        fetchallStatus();
+                if (response.success && response.result) {
+                    setTicket(response.result[0]);
+                } else {
+                    setError(response.message || "Не удалось загрузить заявку");
+                }
+                setLoading(false);
+            };
+
+            const fetchallStatus = async () => {
+                const response = await GetAllStatus();
+                if (response.success && response.result) {
+                    setStatusData(response.result);
+                } else {
+                    setMessage(response.message || "Не удалось загрузить статусы");
+                }
+            };
+            fetchTicket();
+            fetchallStatus();
+        }
+
     }, [params]);
 
     const onSubmit = async (data: ChangeStatusFormData) => {
@@ -66,7 +74,7 @@ export default function TicketPage() {
             const { success, message } = await ChangeTicketStatus(params.id as string, formattedData.status_id, cookies.auth_token);
 
             if (success) {
-                router.push('/user_profile/');
+                router.push('/tickets_list/');
             } else {
                 setMessage(message || "Ошибка создания заявки");
             }
@@ -114,27 +122,30 @@ export default function TicketPage() {
                             <p><strong>Тема:</strong> {ticket.topic_id}</p>
                             <p><strong>Автор:</strong> {ticket.author} <span className="ml-9"></span>
                                 <strong>Почта:</strong> {ticket.author_email}</p>
-
-                            <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex items-center space-x-4 ">
-                                <select
-                                    {...register("status_id", {required: true})}
-                                    className="mt-1 block w-full px-3 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                                    defaultValue="1"
-                                >
-                                    {statusData.map((status) => (
-                                        <option key={status.id} value={status.id}>
-                                            {status.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <button
-                                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                    type="submit"
-                                >
-                                    Сменить статус
-                                </button>
-                                {errors.status_id && <p className="text-red-600">{errors.status_id.message}</p>}
-                            </form>
+                            { userData?.role === "admin" || userData?.role === "worker" ? (
+                                <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex items-center space-x-4 ">
+                                    <select
+                                        {...register("status_id", {required: true})}
+                                        className="mt-1 block w-full px-3 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                                        defaultValue="1"
+                                    >
+                                        {statusData.map((status) => (
+                                            <option key={status.id} value={status.id}>
+                                                {status.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <button
+                                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                        type="submit"
+                                    >
+                                        Сменить статус
+                                    </button>
+                                    {errors.status_id && <p className="text-red-600">{errors.status_id.message}</p>}
+                                </form>
+                            ) : (
+                                <></>
+                            )}
                             {message && <p className="w-full text-center text-red-600">{message}</p>}
                         </div>
                     </div>

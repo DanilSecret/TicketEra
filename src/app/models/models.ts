@@ -47,4 +47,5 @@ export interface JwtPayload {
     username: string;
     userEmail: string;
     userRole: string;
+    userResp: number|null;
 }

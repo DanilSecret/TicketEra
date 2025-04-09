@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {CreateTicketFormData, TopicInterface} from "@/app/models/models";
 import { useCookies } from "react-cookie";
 import {CreateTicket, GetAllTopics} from "@/app/Api/Api";
+import {useUserStore} from "@/store/user_store";
 
 
 const validationSchema = Yup.object().shape({
@@ -26,7 +27,10 @@ export default function CreateTicketForm() {
         resolver: yupResolver(validationSchema)
     })
 
+    const userData = useUserStore((state) => state.userData);
+
     const onSubmit = async (data: CreateTicketFormData) => {
+
         try {
             const formattedData: CreateTicketFormData = {...data, topic_id: Number(data.topic_id)};
             const { success, message } = await CreateTicket(formattedData.title, formattedData.description, formattedData.topic_id, cookies.auth_token);
@@ -42,15 +46,20 @@ export default function CreateTicketForm() {
     };
 
     useEffect(() => {
-        const allTopics = async () => {
-            const response = await GetAllTopics();
-            if (response.success && response.result) {
-                setTopicData(response.result);
-            } else {
-                setMessage(response.message || "Не удалось загрузить темы");
-            }
-        };
-        allTopics();
+        if (!cookies.auth_token || userData === null) {
+            router.push('/sign_in/');
+
+        } else {
+            const allTopics = async () => {
+                const response = await GetAllTopics();
+                if (response.success && response.result) {
+                    setTopicData(response.result);
+                } else {
+                    setMessage(response.message || "Не удалось загрузить темы");
+                }
+            };
+            allTopics();
+        }
     }, []);
 
 
