@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import { useCookies } from "react-cookie";
 import { TicketInterface} from "@/app/models/models";
 import { GetTicketsByUser, DeleteTicket } from "@/app/Api/Api";
@@ -19,8 +19,11 @@ export default function UserProfile() {
     const router = useRouter();
 
     const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
 
     useEffect(() => {
+        if (!hydrated) return;
+
         if (!cookies.auth_token || userData === null) {
             router.push('/sign_in/');
 
@@ -40,7 +43,7 @@ export default function UserProfile() {
             GetUserTickets();
         }
 
-    }, [cookies.auth_token]);
+    }, [cookies.auth_token, userData, hydrated]);
 
     const handleDelete = async (uuid: string) => {
         const { success, message } = await DeleteTicket(uuid);
@@ -50,6 +53,22 @@ export default function UserProfile() {
             setMessage(message || "Не удалось удалить заявку");
         }
     };
+
+    if (!hydrated) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
+    if (!cookies.auth_token || userData === null) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 p-6">
             <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">

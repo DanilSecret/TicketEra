@@ -7,7 +7,7 @@ import { GetHiddenTickets } from "@/app/Api/Api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/header";
-import {useUserStore} from "@/store/user_store";
+import { useUserStore } from "@/store/user_store";
 
 export default function HistoryPage() {
     const [cookies] = useCookies(["auth_token"]);
@@ -18,8 +18,11 @@ export default function HistoryPage() {
     const router = useRouter();
 
     const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
 
     useEffect(() => {
+        if (!hydrated) return;
+
         if (!cookies.auth_token || userData === null) {
             router.push('/sign_in/');
         } else if (userData.role !== "admin" && userData.role !== "worker") {
@@ -27,7 +30,7 @@ export default function HistoryPage() {
         } else {
             const fetchTickets = async () => {
                 setLoading(true);
-                const response = await GetHiddenTickets(cookies.auth_token); // Получаем заявки со status.visible = false
+                const response = await GetHiddenTickets(cookies.auth_token);
                 if (response.success && Array.isArray(response.result)) {
                     setTickets(response.result);
                 } else {
@@ -38,8 +41,7 @@ export default function HistoryPage() {
 
             fetchTickets();
         }
-
-    }, [cookies.auth_token]);
+    }, [cookies.auth_token, userData, hydrated]);
 
     const filteredTickets = tickets.filter(ticket => {
         const lowerQuery = searchQuery.toLowerCase();
@@ -50,6 +52,21 @@ export default function HistoryPage() {
             new Date(ticket.create_at).toLocaleDateString("ru-RU").includes(lowerQuery)
         );
     });
+
+    if (!hydrated) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
+    if (!cookies.auth_token || userData === null || (userData.role !== "admin" && userData.role !== "worker")) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
 
     return (
         <div>

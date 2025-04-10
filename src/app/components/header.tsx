@@ -24,6 +24,7 @@ export function Header() {
         setIsAuth(false);
         setUserMenuOpen(!isUserMenuOpen)
         router.push('/')
+        window.location.reload();
     };
 
     return (

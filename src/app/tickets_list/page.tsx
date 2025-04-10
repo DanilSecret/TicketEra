@@ -17,8 +17,11 @@ export default function TicketsPage() {
     const router = useRouter();
 
     const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
 
     useEffect(() => {
+        if (!hydrated) return;
+
         if (!cookies.auth_token || userData === null) {
             router.push('/sign_in/');
         } else if (userData.role !== "admin" && userData.role !== "worker") {
@@ -36,7 +39,22 @@ export default function TicketsPage() {
             };
             fetchTickets();
         }
-    }, [cookies.auth_token]);
+    }, [cookies.auth_token, userData, hydrated]);
+
+    if (!hydrated) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
+    if (!cookies.auth_token || userData === null || (userData.role !== "admin" && userData.role !== "worker")) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
 
     return (
         <div>

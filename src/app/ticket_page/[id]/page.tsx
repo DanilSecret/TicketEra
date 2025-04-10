@@ -33,9 +33,12 @@ export default function TicketPage() {
         resolver: yupResolver(validationSchema)
     })
     const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
 
     useEffect(() => {
         if (!params || !params.id) return;
+
+        if (!hydrated) return;
 
         if (!cookies.auth_token || userData === null) {
             router.push("/sign_in/");
@@ -65,7 +68,7 @@ export default function TicketPage() {
             fetchallStatus();
         }
 
-    }, [params]);
+    }, [params, cookies.auth_token, userData, hydrated]);
 
     const onSubmit = async (data: ChangeStatusFormData) => {
         if (!params || !params.id) return;

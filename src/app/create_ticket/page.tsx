@@ -28,6 +28,7 @@ export default function CreateTicketForm() {
     })
 
     const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
 
     const onSubmit = async (data: CreateTicketFormData) => {
 
@@ -46,6 +47,8 @@ export default function CreateTicketForm() {
     };
 
     useEffect(() => {
+        if (!hydrated) return;
+
         if (!cookies.auth_token || userData === null) {
             router.push('/sign_in/');
 
@@ -60,8 +63,22 @@ export default function CreateTicketForm() {
             };
             allTopics();
         }
-    }, []);
+    }, [cookies.auth_token, userData, hydrated]);
 
+    if (!hydrated) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
+    if (!cookies.auth_token || userData === null) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Загрузка данных...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="flex items-center justify-center text-center min-h-screen bg-gray-100 text-black">
