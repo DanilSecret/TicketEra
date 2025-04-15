@@ -42,6 +42,7 @@ export function Header() {
                                 <Link href="/create_ticket/" className="hover:underline">Создать заявку</Link>
                                 <Link href="/tickets_list/" className="hover:underline">Лист заявок</Link>
                                 <Link href="/tickets_history/" className="hover:underline">История заявок</Link>
+                                <Link href="/admin_panel/" className="hover:underline">Админ панель</Link>
                             </div>
                         ): userData?.role === "worker" ? (
                             <div className="hidden md:flex items-center gap-4 text-sm">
@@ -103,6 +104,7 @@ export function Header() {
                             <Link href="/create_ticket/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Создать заявку</Link>
                             <Link href="/tickets_list/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Лист заявок</Link>
                             <Link href="/tickets_history/" className="block px-4 py-2 hover:bg-[#1a1f4d]">История заявок</Link>
+                            <Link href="/admin_panel/" className="block px-4 py-2 hover:bg-[#1a1f4d]">Админ панель</Link>
                         </div>
                     ): userData?.role === "worker" ? (
                         <div className="space-y-2">
