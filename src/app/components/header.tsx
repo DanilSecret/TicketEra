@@ -7,12 +7,10 @@ import user from "@/app/assets/user.svg"
 import Cookies from "js-cookie";
 import {useUserStore} from "@/store/user_store";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
 
 export function Header() {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isUserMenuOpen, setUserMenuOpen] = useState(false);
-    const router = useRouter()
 
     const isAuth = useUserStore((state) => state.isAuth);
     const {setUserData, setIsAuth} = useUserStore();
@@ -23,8 +21,7 @@ export function Header() {
         setUserData(null);
         setIsAuth(false);
         setUserMenuOpen(!isUserMenuOpen)
-        router.push('/')
-        window.location.reload();
+        window.location.href = '/';
     };
 
     return (

@@ -42,8 +42,9 @@ export default function TicketPage() {
         if (!hydrated) return;
 
         if (!cookies.auth_token || userData === null) {
-            router.push("/sign_in/");
-
+            router.push('/sign_in/');
+        } else if (userData.role !== "admin") {
+            router.push('/');
         } else {
             const fetchTicket = async () => {
                 setLoading(true);
@@ -81,7 +82,7 @@ export default function TicketPage() {
             } = await ChangeTicketStatus(params.id as string, formattedData.status_id, cookies.auth_token);
 
             if (success) {
-                router.push('/tickets_list/');
+                router.push('/admin_panel/tickets/');
             } else {
                 setMessage(message || "Ошибка создания заявки");
             }
@@ -148,7 +149,7 @@ export default function TicketPage() {
                                             ))}
                                         </select>
                                         <button
-                                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-48"
                                             type="submit"
                                         >
                                             Сменить статус

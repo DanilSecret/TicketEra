@@ -7,7 +7,7 @@ import {useRouter} from "next/navigation";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {CreateTicketFormData, TopicInterface} from "@/app/models/models";
 import {useCookies} from "react-cookie";
-import {CreateTicket, GetAllTopics} from "@/app/Api/Api";
+import {CreateAdminTicket, GetAllTopics} from "@/app/Api/Api";
 import {useUserStore} from "@/store/user_store";
 import Header from "@/app/components/header";
 
@@ -35,13 +35,10 @@ export default function CreateTicketForm() {
 
         try {
             const formattedData: CreateTicketFormData = {...data, topic_id: Number(data.topic_id)};
-            const {
-                success,
-                message
-            } = await CreateTicket(formattedData.title, formattedData.description, formattedData.topic_id, cookies.auth_token);
+            const {success, message} = await CreateAdminTicket(formattedData.title, formattedData.description, formattedData.topic_id, cookies.auth_token);
 
             if (success) {
-                router.push('/');
+                router.push('/admin_panel/tickets/');
             } else {
                 setMessage(message || "Ошибка создания заявки");
             }
@@ -88,7 +85,20 @@ export default function CreateTicketForm() {
         <div>
             <Header/>
             <div className="flex items-center justify-center text-center min-h-screen bg-gray-100 text-black">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+
+                <form onSubmit={handleSubmit(onSubmit)}
+                      className="relative w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+
+                    {/*<button*/}
+                    {/*    type="button"*/}
+                    {/*    onClick={() => router.push('/admin_panel/tickets/')}*/}
+                    {/*    className="absolute top-2 left-2 text-gray-600 border-2 border-solid hover:border-black p-2 rounded-full bg-white shadow"*/}
+                    {/*    aria-label="Назад"*/}
+                    {/*>*/}
+                    {/*    ←*/}
+                    {/*</button>*/}
+
+
                     <h1 className="text-xl font-semibold text-center mb-4">Создание заявки</h1>
 
                     <div className="mb-4">

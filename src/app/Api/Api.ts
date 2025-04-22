@@ -182,3 +182,38 @@ export async function GetHiddenTickets(auth_token: string) {
         return { success: false, message: "Ошибка сети" };
     }
 }
+
+export async function GetAdminTickets(auth_token: string) {
+    try {
+        const res = await fetch("/api/admin_panel/getAllTickets", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error("Ошибка при получении скрытых заявок:", error);
+        return { success: false, message: "Ошибка сети" };
+    }
+}
+
+export async function CreateAdminTicket(title: string, description: string, topic_id: number, auth_token: string) {
+    try {
+        const response = await fetch("/api/admin_panel/createTicketByAdmin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ title, description, topic_id }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
