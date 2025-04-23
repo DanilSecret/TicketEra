@@ -304,3 +304,38 @@ export async function UpdateStatus(id: number, name: string, color: string, visi
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
+
+export async function GetAdminTopics(auth_token:string){
+    try {
+        const response = await fetch(`/api/admin_panel/getAllTopics`,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    }catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function DeleteTopic(topic_id:number){
+    try {
+        const response = await fetch(`/api/admin_panel/deleteTopic`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ topic_id }),
+
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
