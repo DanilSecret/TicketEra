@@ -88,17 +88,6 @@ export default function CreateTicketForm() {
 
                 <form onSubmit={handleSubmit(onSubmit)}
                       className="relative w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
-
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    onClick={() => router.push('/admin_panel/tickets/')}*/}
-                    {/*    className="absolute top-2 left-2 text-gray-600 border-2 border-solid hover:border-black p-2 rounded-full bg-white shadow"*/}
-                    {/*    aria-label="Назад"*/}
-                    {/*>*/}
-                    {/*    ←*/}
-                    {/*</button>*/}
-
-
                     <h1 className="text-xl font-semibold text-center mb-4">Создание заявки</h1>
 
                     <div className="mb-4">

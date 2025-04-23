@@ -183,6 +183,8 @@ export async function GetHiddenTickets(auth_token: string) {
     }
 }
 
+
+
 export async function GetAdminTickets(auth_token: string) {
     try {
         const res = await fetch("/api/admin_panel/getAllTickets", {
@@ -214,6 +216,91 @@ export async function CreateAdminTicket(title: string, description: string, topi
         return { success: response.ok, message: result.message };
     } catch (error) {
         console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function GetAdminStatuses(auth_token: string) {
+    try {
+        const res = await fetch("/api/admin_panel/getAllStatuses", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error("Ошибка при получении скрытых заявок:", error);
+        return { success: false, message: "Ошибка сети" };
+    }
+}
+
+export async function DeleteStatus(status_id:number){
+    try {
+        const response = await fetch(`/api/admin_panel/deleteStatus`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status_id }),
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function CreateStatus(name: string, color: string, visible: boolean, auth_token: string) {
+    try {
+        const response = await fetch("/api/admin_panel/createStatus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ name, color, visible }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function GetStatusById(id: number) {
+    try {
+        const response = await fetch(`/api/admin_panel/getStatusById?id=${id}`, {
+            method: "GET",
+        });
+
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error) {
+        console.error("Ошибка при получении статуса по ID:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+
+export async function UpdateStatus(id: number, name: string, color: string, visible: boolean, auth_token: string) {
+    try {
+        const response = await fetch(`/api/admin_panel/updateStatus/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({id, name, color, visible }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при обновлении статуса:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }

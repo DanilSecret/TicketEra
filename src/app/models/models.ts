@@ -22,6 +22,14 @@ export interface ChangeStatusFormData {
 export interface StatusInterface {
     id:number;
     name:string;
+    color: string;
+    visible:boolean;
+}
+
+export interface StatusEInterface {
+    name:string;
+    color: string;
+    visible:boolean;
 }
 
 export interface TopicInterface {

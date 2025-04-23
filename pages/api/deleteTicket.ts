@@ -15,13 +15,13 @@ export default async function DeleteTicket(req: NextApiRequest, res: NextApiResp
             const result = await pool.query('DELETE FROM tickets WHERE uuid = $1 RETURNING *', [ticket_uuid]);
 
             if (result.rows.length !== 0) {
-                return res.status(200).json({ success: true, message: 'Тикет успешно удален' });
+                return res.status(200).json({ success: true, message: 'Заявка успешно удалена' });
             }else{
                 return res.status(404).json({ error: 'Заявка не найдена' });
             }
         } catch (error) {
-            console.error('Ошибка при удалении тикета:', error);
-            return res.status(500).json({ success: false, message: 'Ошибка при удалении тикета' });
+            console.error('Ошибка при удалении заявки:', error);
+            return res.status(500).json({ success: false, message: 'Ошибка при удалении заявки' });
         }
     } else {
         console.error('Метод не поддерживается');

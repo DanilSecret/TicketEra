@@ -1,0 +1,151 @@
+"use client";
+
+import {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
+import {useRouter} from "next/navigation";
+import Header from "@/app/components/header";
+import {useUserStore} from "@/store/user_store";
+import {StatusInterface} from "@/app/models/models";
+import Link from "next/link";
+import {DeleteStatus, GetAdminStatuses} from "@/app/Api/Api";
+
+export default function AdminStatusesPage() {
+    const [cookies] = useCookies(["auth_token"]);
+    const [statuses, setStatuses] = useState<StatusInterface[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [message, setMessage] = useState<string | null>(null);
+
+    const userData = useUserStore((state) => state.userData);
+    const hydrated = useUserStore((state) => state.hydrated);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!hydrated) return;
+
+        if (!cookies.auth_token || userData === null) {
+            router.push("/sign_in/");
+        } else if (userData.role !== "admin") {
+            router.push("/");
+        } else {
+            const fetchStatuses = async () => {
+                setLoading(true);
+                const response = await GetAdminStatuses(cookies.auth_token);
+                if (response.success && Array.isArray(response.result.rows)) {
+                    setStatuses(response.result.rows);
+                } else {
+                    setMessage(response.message || "Ошибка при загрузке статусов");
+                }
+                setLoading(false);
+            };
+            fetchStatuses();
+        }
+    }, [cookies.auth_token, userData, hydrated]);
+
+    async function handleDelete(id: number) {
+        const confirmed = window.confirm("Удалить статус?");
+        if (!confirmed) return;
+
+        const {success, message} = await DeleteStatus(id);
+        if (success) {
+            setStatuses((prev) => prev.filter((s) => s.id !== id));
+        } else {
+            setMessage(message || "Не удалось удалить статус");
+        }
+    }
+
+    const filteredStatuses = statuses.filter((status) => {
+        const q = searchQuery.toLowerCase();
+
+        const visibleString = status.visible ? "да true" : "нет false";
+
+        return (
+            status.name.toLowerCase().includes(q) ||
+            status.id.toString().includes(q) ||
+            visibleString.includes(q)
+        );
+    });
+
+
+    if (!hydrated) {
+        return <div className="flex justify-center items-center h-screen text-gray-500">Загрузка...</div>;
+    }
+
+    return (
+        <div>
+            <Header/>
+            <div className="min-h-screen bg-gray-100 p-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-3xl font-bold text-black">Управление статусами</h1>
+                    </div>
+
+                    {message && <p className="text-red-500 text-center">{message}</p>}
+
+                    <div className="flex items-center gap-4 mb-4">
+                        <input
+                            type="text"
+                            placeholder="Поиск по айди, названию, видимости статуса..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="flex-1 p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black bg-white"
+                        />
+                        <Link
+                            href="/admin_panel/status/add"
+                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition whitespace-nowrap"
+                        >
+                            + Добавить статус
+                        </Link>
+                    </div>
+
+
+                    {loading ? (
+                        <div className="flex justify-center items-center py-10">
+                            <div
+                                className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto bg-white rounded shadow">
+                            <table className="min-w-full text-sm text-left text-gray-700">
+                                <thead className="bg-gray-200 text-xs uppercase text-gray-600">
+                                <tr>
+                                    <th className="px-4 py-3">ID</th>
+                                    <th className="px-4 py-3">Название</th>
+                                    <th className="px-9 py-3">Цвет</th>
+                                    <th className="px-4 py-3">Видимость</th>
+                                    <th className="px-4 py-3 text-center">Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {filteredStatuses.sort((a, b) => a.id - b.id).map((status) => (
+                                    <tr key={status.id} className="border-b hover:bg-gray-50">
+                                        <td className="px-4 py-3">{status.id}</td>
+                                        <td className="px-4 py-3">{status.name}</td>
+                                        <td className="px-4 py-3">
+                                                <span
+                                                    className="px-3 py-1 rounded-full text-white text-xs font-semibold"
+                                                    style={{backgroundColor: status.color}}>
+                                                    {status.color}
+                                                </span>
+                                        </td>
+                                        <td className="px-11 py-3">
+                                            {status.visible ? "Да" : "Нет"}
+                                        </td>
+                                        <td className="px-4 py-3 flex justify-center gap-4">
+                                            <Link href={`/admin_panel/status/edit/${status.id}`}
+                                                  className="text-blue-600 hover:underline">Изменить</Link>
+                                            <button onClick={() => handleDelete(status.id)}
+                                                    className="text-red-600 hover:underline">Удалить
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
