@@ -6,7 +6,7 @@ export default function Home() {
 
 
     return (
-        <div>
+        <div className="bg-[#03062c] h-screen">
             <Header/>
 
         </div>
