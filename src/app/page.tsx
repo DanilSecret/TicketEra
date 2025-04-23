@@ -1,6 +1,7 @@
 "use client"
 
 import Header from "@/app/components/header";
+import Link from "next/link";
 
 export default function Home() {
     const products = [
@@ -16,16 +17,16 @@ export default function Home() {
             <Header/>
 
             {/* Приветственный текст */}
-            <section className="p-8 justify-center items-center">
+            <section className="p-8 flex justify-center items-center mb-12">
                 <div className="max-w-screen-lg mx-auto w-full text-center">
-                    <p className="text-lg max-w-xl">
+                    <p className="text-2xl  max-w-xl mx-auto">
                         Мы рады видеть вас на нашем сайте! Здесь вы найдете качественную продукцию, созданную с заботой о вас.
                     </p>
                 </div>
             </section>
 
             {/* Карточки товаров */}
-            <section className="px-4 py-8 flex justify-center items-center">
+            <section className="px-4 py-8 flex justify-center items-center mb-12">
                 <div className="max-w-screen-xl mx-auto w-full">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Наша продукция</h2>
                     <p className="mb-4 text-center">Мы предлагаем широкий ассортимент IT-товаров, соответствующих высоким стандартам качества.</p>
@@ -40,15 +41,16 @@ export default function Home() {
             </section>
 
             {/* Форма с кнопкой */}
-            <section className="p-8 border border-white flex justify-center items-center">
-                <div className="max-w-screen-lg mx-auto w-full text-center">
+            <section className="p-8 flex justify-center items-center mb-12">
+                <div className="max-w-screen-lg mx-auto w-full border border-[1px] border-gray-400 p-8 text-center rounded-xl">
                     <h2 className="text-xl font-semibold mb-2">Обратная связь</h2>
                     <p className="mb-4">Если вы нашли проблемы в программе, просто подайте:</p>
-                    <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg text-white font-bold transition">
-                        Заявка
-                    </button>
+                    <Link href="/create_ticket/" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3 rounded-xl text-white font-bold transition">
+                        Создать заявку
+                    </Link>
                 </div>
             </section>
+
 
             {/* Футер */}
             <footer className="mt-auto bg-[#0a0d3a] py-6 text-center">
