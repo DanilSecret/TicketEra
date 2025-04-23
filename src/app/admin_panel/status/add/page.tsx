@@ -103,8 +103,7 @@ export default function CreateStatusForm() {
                         <select
                             {...register("visible")}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                            defaultValue="true"
-                        >
+                            defaultValue="true">
                             <option value="true">Да (видим)</option>
                             <option value="false">Нет (скрыт)</option>
                         </select>

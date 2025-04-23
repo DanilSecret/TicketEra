@@ -339,3 +339,52 @@ export async function DeleteTopic(topic_id:number){
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
+
+export async function CreateTopic(name:string, auth_token:string){
+    try {
+        const response = await fetch("/api/admin_panel/createTopic", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ name }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function GetTopicById(id:number){
+    try {
+        const response = await fetch(`/api/admin_panel/getTopicById?id=${id}`, {
+            method: "GET",
+        });
+
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error) {
+        console.error("Ошибка при получении статуса по ID:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+export async function UpdateTopic(id: number, name: string, auth_token: string) {
+    try {
+        const response = await fetch(`/api/admin_panel/updateTopic/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({id, name }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при обновлении статуса:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}

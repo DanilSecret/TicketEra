@@ -1,15 +1,15 @@
 "use server";
 
-import pool from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import pool from "@/lib/db";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "@/app/models/models";
 
 const JWT_SECRET = process.env.JWT_SECRET || "ошибка";
 
-export default async function getAllTopics(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== "GET") {
-        return res.status(405).json({ message: "Метод не разрешен" });
+export default async function createTopic(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ message: "Метод не поддерживается" });
     }
 
     const authHeader = req.headers.authorization;
@@ -33,15 +33,27 @@ export default async function getAllTopics(req: NextApiRequest, res: NextApiResp
             return res.status(400).json({ message: "Пользователь не найден" });
         }
 
+        const { name} = req.body as {
+            name: string;
+        };
 
-        const ticketsQuery = `SELECT * FROM topic`;
+        if (!name) {
+            return res.status(400).json({ message: "Все поля должны быть заполнены" });
+        }
 
-        const result = await pool.query(ticketsQuery);
 
-        return res.status(200).json({ success: true, result: result });
+        const result = await pool.query(
+            "INSERT INTO topic (name) VALUES ($1) RETURNING *",
+            [name]
+        );
+
+        return res.status(201).json({
+            message: "Статус успешно создан",
+            status: result.rows[0],
+        });
 
     } catch (error) {
-        console.error("Ошибка при получении тикетов для админа:", error);
-        return res.status(500).json({ success: false, message: "Не удалось получить данные" });
+        console.error("Ошибка при создании статуса:", error);
+        return res.status(500).json({ message: "Внутренняя ошибка сервера" });
     }
 }

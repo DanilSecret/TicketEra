@@ -37,6 +37,10 @@ export interface TopicInterface {
     name:string;
 }
 
+export interface TopicFormData {
+    name: string;
+}
+
 export interface TicketInterface {
     uuid: string;
     title: string;

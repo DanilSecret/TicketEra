@@ -4,7 +4,7 @@ import pool from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 
-export default async function GetStatusById(req: NextApiRequest, res: NextApiResponse) {
+export default async function GetTopicById(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") {
         return res.status(405).json({ message: "Метод не разрешен" });
     }
@@ -15,7 +15,7 @@ export default async function GetStatusById(req: NextApiRequest, res: NextApiRes
             return res.status(401).json({ message: "Ошибка получения id" });
         }
 
-        const result = await pool.query("SELECT * FROM status WHERE id = $1", [id]);
+        const result = await pool.query("SELECT * FROM topic WHERE id = $1", [id]);
         if (result.rows.length === 0) {
             return res.status(400).json({ message: "Заявка не найдена" });
         }
