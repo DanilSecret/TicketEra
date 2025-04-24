@@ -62,7 +62,7 @@ export default function Home() {
                 <div className="max-w-screen-lg mx-auto w-full border border-[1px] border-gray-400 p-8 text-center rounded-xl">
                     <h2 className="text-xl font-semibold mb-2">Обратная связь</h2>
                     <p className="mb-4">Если вы нашли проблемы в программе, просто подайте:</p>
-                    <Link href="/create_ticket/" className="bg-[#7F5AF0] hover:bg-[#6F44F4] text-lg px-8 py-3 rounded-xl text-white font-bold transition">
+                    <Link href="/create_ticket/" className="bg-blue-500 hover:bg-blue-600 text-lg px-8 py-3 rounded-xl text-white font-bold transition">
                         Создать заявку
                     </Link>
                 </div>

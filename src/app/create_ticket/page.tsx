@@ -85,12 +85,12 @@ export default function CreateTicketForm() {
     }
 
     return (
-        <div>
+        <div className="min-h-screen bg-[#03062c]">
             <Header/>
-            <div className="flex items-center justify-center text-center min-h-screen bg-[#03062c] text-white">
+            <div className="flex items-start justify-center text-center text-white mt-[100px] px-4 md:px-0">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full max-w-lg min-h-[550px] bg-[#101025] p-6 border border-white rounded-[8px] shadow-md flex flex-col justify-between"
+                    className="w-full max-w-md md:max-w-lg min-h-[550px] bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between"
                 >
                     <h1 className="text-xl font-semibold text-center mb-4 ">Создание заявки</h1>
 
@@ -100,7 +100,7 @@ export default function CreateTicketForm() {
                         </label>
                         <select
                             {...register("topic_id", {required: true})}
-                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
                             defaultValue=""
                         >
                             <option value="" disabled>Выберите тему</option>
@@ -123,7 +123,7 @@ export default function CreateTicketForm() {
                             type="text"
                             {...register("title")}
                             placeholder="Заголовок"
-                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
                         />
                         {errors.title && <p className="text-red-600">{errors.title.message}</p>}
                     </div>
@@ -135,13 +135,13 @@ export default function CreateTicketForm() {
                         <textarea
                             {...register("description")}
                             placeholder="Описание"
-                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
                         />
                         {errors.description && <p className="text-red-600">{errors.description.message}</p>}
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-[#7F5AF0] hover:bg-[#6F44F4] text-white py-2 px-4 rounded-lg">Создать
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ">Создать
                         заявку
                     </button>
                     {message && <p className="w-full text-center text-red-600">{message}</p>}
