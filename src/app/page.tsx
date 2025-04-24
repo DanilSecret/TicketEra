@@ -28,8 +28,6 @@ export default function Home() {
     ];
 
 
-
-
     return (
         <div className="bg-[#03062c] min-h-screen text-white flex flex-col">
             <Header/>
