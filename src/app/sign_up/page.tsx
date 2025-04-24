@@ -64,7 +64,7 @@ export default function Sign_form() {
                             type="text"
                             placeholder="Имя пользователя"
                             {...register("username")}
-                            className=" bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
+                            className=" bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.username && <p className="text-red-600">{errors.username.message}</p>}
                     </div>
@@ -76,7 +76,7 @@ export default function Sign_form() {
                             type="email"
                             placeholder="Почта"
                             {...register("email")}
-                            className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
+                            className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                     </div>
@@ -88,7 +88,7 @@ export default function Sign_form() {
                             type="password"
                             placeholder="Пароль"
                             {...register("password")}
-                            className=" bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
+                            className=" bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.password && <p className="text-red-600">{errors.password.message}</p>}
                     </div>
@@ -103,7 +103,7 @@ export default function Sign_form() {
                             type="password"
                             placeholder="Подтвердите пароль"
                             {...register("confirmPassword")}
-                            className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600"
+                            className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.confirmPassword && <p className="text-red-600">{errors.confirmPassword.message}</p>}
                     </div>
