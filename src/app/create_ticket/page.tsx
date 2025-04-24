@@ -85,16 +85,16 @@ export default function CreateTicketForm() {
     }
 
     return (
-        <div className="min-h-screen bg-[#03062c]">
+        <div className="bg-[#03062c] h-screen flex flex-col">
             <Header/>
-            <div className="flex items-start justify-center text-center text-white mt-[100px] px-4 md:px-0">
+            <div className="flex-1 flex justify-center items-center px-4 md:px-0">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="w-full max-w-md md:max-w-lg min-h-[550px] bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between"
                 >
-                    <h1 className="text-xl font-semibold text-center mb-4 ">Создание заявки</h1>
+                    <h1 className="text-xl font-semibold text-center mb-2 ">Создание заявки</h1>
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label htmlFor="topic_id" className="block text-sm font-medium text-white">
                             Тема заявки
                         </label>
@@ -115,7 +115,7 @@ export default function CreateTicketForm() {
                     </div>
 
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label htmlFor="title" className="block text-sm font-medium text-white">
                             Заголовок
                         </label>
@@ -128,7 +128,7 @@ export default function CreateTicketForm() {
                         {errors.title && <p className="text-red-600">{errors.title.message}</p>}
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label htmlFor="description" className="block text-sm font-medium text-white">
                             Описание
                         </label>

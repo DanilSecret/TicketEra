@@ -23,7 +23,6 @@ export default function Login_form() {
     })
 
     const onSubmit = async (data: LoginFormData) => {
-
         try {
             const {success, message, result} = await AuthUser(data.username, data.password);
             if (success) {
@@ -39,10 +38,11 @@ export default function Login_form() {
     };
 
     return (
-        <div className="min-h-screen bg-[#03062c]">
-            <Header/>
-            <div className="flex items-start justify-center text-center text-white mt-[100px] px-4 md:px-0">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm p-6 rounded-lg shadow-md bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between">
+        <div className="bg-[#03062c] h-screen flex flex-col">
+            <Header />
+            <div className="flex-1 flex justify-center items-center px-4 md:px-0">
+                <form onSubmit={handleSubmit(onSubmit)}
+                      className="w-full max-w-sm p-6 rounded-lg shadow-md bg-[#101025] border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between">
                     <h1 className="text-xl font-semibold text-center mb-4">Авторизация</h1>
 
                     <div className="mb-4">
@@ -68,11 +68,20 @@ export default function Login_form() {
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg  hover:bg-blue-600 mt-6">Авторизироваться
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mt-6">
+                        Авторизироваться
                     </button>
-                    {message && <p className="w-full text-center text-red-600">{message}</p>}
+
+                    <p className="text-sm text-white mt-4 text-center">
+                        Вы впервые на нашем сайте?{" "}
+                        <a href="/sign_up/" className="text-blue-400 hover:text-blue-600 underline">
+                            Зарегистрируйтесь
+                        </a>
+                    </p>
+
+                    {message && <p className="w-full text-center text-red-600 mt-2">{message}</p>}
                 </form>
             </div>
         </div>
-    )
+    );
 }

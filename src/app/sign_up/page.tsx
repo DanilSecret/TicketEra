@@ -51,10 +51,11 @@ export default function Sign_form() {
     };
 
     return (
-        <div className="min-h-screen bg-[#03062c]">
+        <div className="bg-[#03062c] h-screen flex flex-col">
             <Header/>
-            <div className="flex items-start justify-center text-center text-white mt-[100px] px-4 md:px-0">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm p-6 rounded-lg shadow-md bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between">
+            <div className="flex-1 flex justify-center items-center px-4 md:px-0">
+                <form onSubmit={handleSubmit(onSubmit)}
+                      className="w-full max-w-sm p-6 rounded-lg shadow-md bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between">
                     <h1 className="text-xl font-semibold text-center mb-4 ">Регистрация</h1>
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-sm font-medium text-white">
