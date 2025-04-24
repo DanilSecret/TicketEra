@@ -61,3 +61,28 @@ export interface JwtPayload {
     userRole: string;
     userResp: number|null;
 }
+
+export interface UserInterface {
+    uuid:string;
+    username:string;
+    email:string
+    role: string;
+    responsibility:number|null;
+    password: string;
+}
+
+export interface UserForm {
+    username:string;
+    email:string
+    role: string;
+    responsibility?:number|null;
+    password: string;
+}
+
+export interface UserFormData{
+    username:string;
+    email:string
+    role: string;
+    responsibility?:number|null;
+}
+

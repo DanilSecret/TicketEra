@@ -371,6 +371,7 @@ export async function GetTopicById(id:number){
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }
+
 export async function UpdateTopic(id: number, name: string, auth_token: string) {
     try {
         const response = await fetch(`/api/admin_panel/updateTopic/`, {
@@ -385,6 +386,93 @@ export async function UpdateTopic(id: number, name: string, auth_token: string) 
         return { success: response.ok, message: result.message };
     } catch (error) {
         console.error("Ошибка при обновлении статуса:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+
+export async function GetAdminUsers(auth_token:string){
+    try {
+        const response = await fetch(`/api/admin_panel/getAllUsers`,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    }catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+
+export async function CreateUser(username:string,email:string, role:string,password:string, auth_token:string , responsibility?:number|null){
+    try {
+        const response = await fetch("/api/admin_panel/createUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ username, email, role, responsibility, password }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function GetUserById(id:string){
+    try {
+        const response = await fetch(`/api/admin_panel/getUserById?id=${id}`, {
+            method: "GET",
+        });
+
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error) {
+        console.error("Ошибка при получении статуса по ID:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function UpdateUser(uuid:string, username:string,email:string, role:string, auth_token:string , responsibility?:number|null){
+    try {
+        const response = await fetch("/api/admin_panel/updateUser", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth_token}`,
+            },
+            body: JSON.stringify({ uuid, username, email, role, responsibility }),
+        });
+        const result = await response.json();
+        return { success: response.ok, message: result.message };
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        return { success: false, message: "Ошибка соединения с сервером" };
+    }
+}
+
+export async function DeleteUser(uuid:string){
+    try {
+        const response = await fetch(`/api/admin_panel/deleteUser`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ uuid }),
+
+        });
+        const result = await response.json();
+        return {success: response.ok, result: result.result};
+    } catch (error){
+        console.error("Ошибка при отправке данных:", error);
         return { success: false, message: "Ошибка соединения с сервером" };
     }
 }

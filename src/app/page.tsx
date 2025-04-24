@@ -54,7 +54,7 @@ export default function Home() {
 
             {/* Футер */}
             <footer className="mt-auto bg-[#0a0d3a] py-6 text-center">
-                <p className="text-sm text-gray-400">© 2025 IT Solutions. Все права защищены.</p>
+                <p className="text-sm text-gray-400">© 2025 ООО &#34;Новая Эра&#34;. Все права защищены.</p>
             </footer>
         </div>
     )
