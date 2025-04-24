@@ -87,17 +87,20 @@ export default function CreateTicketForm() {
     return (
         <div>
             <Header/>
-            <div className="flex items-center justify-center text-center min-h-screen bg-gray-100 text-black">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
-                    <h1 className="text-xl font-semibold text-center mb-4">Создание заявки</h1>
+            <div className="flex items-center justify-center text-center min-h-screen bg-[#03062c] text-white">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="w-full max-w-lg min-h-[550px] bg-[#101025] p-6 border border-white rounded-[8px] shadow-md flex flex-col justify-between"
+                >
+                    <h1 className="text-xl font-semibold text-center mb-4 ">Создание заявки</h1>
 
                     <div className="mb-4">
-                        <label htmlFor="topic_id" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="topic_id" className="block text-sm font-medium text-white">
                             Тема заявки
                         </label>
                         <select
                             {...register("topic_id", {required: true})}
-                            className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                             defaultValue=""
                         >
                             <option value="" disabled>Выберите тему</option>
@@ -113,30 +116,32 @@ export default function CreateTicketForm() {
 
 
                     <div className="mb-4">
-                        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="title" className="block text-sm font-medium text-white">
                             Заголовок
                         </label>
-                        <input type="text" {...register("title")}
-                               placeholder="Заголовок"
-                               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        <input
+                            type="text"
+                            {...register("title")}
+                            placeholder="Заголовок"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                         />
                         {errors.title && <p className="text-red-600">{errors.title.message}</p>}
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="description" className="block text-sm font-medium text-white">
                             Описание
                         </label>
                         <textarea
                             {...register("description")}
                             placeholder="Описание"
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-3 text-base bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                         />
                         {errors.description && <p className="text-red-600">{errors.description.message}</p>}
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700">Создать
+                            className="w-full bg-[#7F5AF0] hover:bg-[#6F44F4] text-white py-2 px-4 rounded-lg">Создать
                         заявку
                     </button>
                     {message && <p className="w-full text-center text-red-600">{message}</p>}
