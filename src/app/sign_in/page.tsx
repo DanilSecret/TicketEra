@@ -39,36 +39,36 @@ export default function Login_form() {
     };
 
     return (
-        <div>
+        <div className="min-h-screen bg-[#03062c]">
             <Header/>
-            <div className="flex items-center justify-center text-center min-h-screen bg-gray-100 text-black">
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-start justify-center text-center text-white mt-[100px] px-4 md:px-0">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm p-6 rounded-lg shadow-md bg-[#101025] p-6 border border-blue-500 rounded-[10px] shadow-md flex flex-col justify-between">
                     <h1 className="text-xl font-semibold text-center mb-4">Авторизация</h1>
 
                     <div className="mb-4">
-                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="username" className="block text-sm font-medium text-white">
                             Имя пользователя
                         </label>
                         <input type="text" {...register("username")}
                                placeholder="Имя пользователя"
-                               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                               className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.username && <p className="text-red-600">{errors.username.message}</p>}
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="password" className="block text-sm font-medium text-white">
                             Пароль
                         </label>
                         <input type="password" {...register("password")}
                                placeholder="Пароль"
-                               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                               className="bg-white mt-1 block w-full px-3 py-2 border-2 border-blue-500 rounded-lg shadow-sm focus:ring-blue-600 focus:border-blue-600 text-black"
                         />
                         {errors.password && <p className="text-red-600">{errors.password.message}</p>}
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700">Авторизироваться
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg  hover:bg-blue-600 mt-6">Авторизироваться
                     </button>
                     {message && <p className="w-full text-center text-red-600">{message}</p>}
                 </form>
