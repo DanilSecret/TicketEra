@@ -57,11 +57,11 @@ export default function TicketsPage() {
     }
 
     return (
-        <div>
+        <div className="bg-[#03062c] min-h-screen flex flex-col">
             <Header/>
-            <div className="min-h-screen bg-gray-100 p-6">
+            <div className="p-6">
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-3xl font-bold text-black mb-6 text-center">Список актуальных заявок</h1>
+                    <h1 className="text-3xl font-bold text-white mb-6 text-center">Список актуальных заявок</h1>
 
                     {message && <p className="text-red-500 text-center">{message}</p>}
 
@@ -71,20 +71,20 @@ export default function TicketsPage() {
                                 className="border-t-4 border-blue-500 w-16 h-16 border-solid rounded-full animate-spin"></div>
                         </div>
                     ) : tickets.length === 0 ? (
-                        <p className="text-gray-700 text-center text-lg">Заявок пока нет</p>
+                        <p className="text-white text-center text-lg">Заявок пока нет</p>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {tickets.slice().reverse().map((ticket) => (
                                 <Link
                                     href={`/ticket_page/${ticket.uuid}`}
                                     key={ticket.uuid}
-                                    className="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-all border border-gray-300 flex flex-col justify-between"
+                                    className="bg-[#1a1d45] rounded-lg shadow-md p-5 hover:shadow-lg transition-all border border-blue-500 flex flex-col justify-between"
                                 >
                                     <div>
-                                        <h2 className="text-lg font-bold text-black mb-2">{ticket.title}</h2>
-                                        <p className="text-sm text-gray-600 mb-1">
+                                        <h2 className="text-lg font-bold text-white mb-2">{ticket.title}</h2>
+                                        <p className="text-sm text-white mb-1">
                                             <strong>Тема:</strong> {ticket.topic_id}</p>
-                                        <p className="text-sm text-gray-600 mb-3">
+                                        <p className="text-sm text-white mb-3">
                                             <strong>Дата:</strong>{" "}
                                             {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", {
                                                 dateStyle: "long",
