@@ -92,12 +92,11 @@ export default function TicketPage() {
 
 
     return (
-        <div>
+        <div className="bg-[#03062c] min-h-screen flex flex-col">
             <Header/>
-            <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
-                <div className="w-full max-w-xl bg-white shadow-md rounded-lg p-6 h-auto max-h-[80vh] overflow-auto">
-                    <h1 className="text-3xl font-bold text-black text-center mb-6">Заявка</h1>
-
+            <div className="flex-1 flex justify-center items-center px-4 md:px-0">
+                <div className="w-full max-w-xl shadow-md rounded-lg p-6 h-auto max-h-[80vh] overflow-auto bg-[#101025] border border-blue-500">
+                    <h1 className="text-3xl font-bold text-white text-center mb-6">Заявка</h1>
                     {loading ? (
                         <div className="flex justify-center items-center py-10">
                             <div
@@ -106,10 +105,10 @@ export default function TicketPage() {
                     ) : error ? (
                         <p className="text-red-500 text-center text-lg">{error}</p>
                     ) : ticket ? (
-                        <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-300">
+                        <div className="bg-[#1a1d45] p-5 rounded-lg shadow-sm border border-blue-500">
 
                             <div className="flex flex-col md:flex-row justify-normal md:justify-between mb-2">
-                                <p className="text-gray-600">
+                                <p className="text-white">
                                     <strong>Статус:</strong>
                                     <span
                                         className="px-3 py-1 ml-2 rounded-full text-white text-sm font-medium"
@@ -117,7 +116,7 @@ export default function TicketPage() {
                                     {ticket.status_id}
                                 </span>
                                 </p>
-                                <p className="text-gray-600 text-base">
+                                <p className="text-white text-base">
                                     <strong>Дата: </strong>
                                     {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", {
                                         dateStyle: 'long',
@@ -126,10 +125,10 @@ export default function TicketPage() {
                                 </p>
                             </div>
 
-                            <h2 className="text-xl font-semibold text-black mb-3">{ticket.title}</h2>
-                            <p className="text-gray-600 text-base mb-4 text-wrap break-words">{ticket.description}</p>
+                            <h2 className="text-xl font-semibold text-white mb-3">{ticket.title}</h2>
+                            <p className="text-white text-base mb-4 text-wrap break-words">{ticket.description}</p>
 
-                            <div className="mt-3 text-sm text-gray-600">
+                            <div className="mt-3 text-sm text-white">
                                 <p><strong>Тема:</strong> {ticket.topic_id}</p>
                                 <p><strong>Автор:</strong> {ticket.author} <span className="ml-9"></span>
                                     <strong>Почта:</strong> {ticket.author_email}</p>
@@ -138,7 +137,7 @@ export default function TicketPage() {
                                           className="mt-4 flex items-center space-x-4 ">
                                         <select
                                             {...register("status_id", {required: true})}
-                                            className="mt-1 block w-full px-3 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                                            className="mt-1 block w-full px-3 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white text-black"
                                             defaultValue="1"
                                         >
                                             {statusData.map((status) => (
