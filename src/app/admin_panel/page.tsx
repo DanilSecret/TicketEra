@@ -66,9 +66,9 @@ export default function AdminPage() {
     }
 
     return (
-        <div>
+        <div className="h-screen flex flex-col">
             <Header />
-            <div className="min-h-screen bg-gray-100 p-6">
+            <div className="h-screen bg-gray-100 p-6">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl font-bold text-black mb-6 text-center">Админ панель</h1>
 

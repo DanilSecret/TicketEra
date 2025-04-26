@@ -78,9 +78,9 @@ export default function EditStatusPage() {
     }
 
     return (
-        <div>
+        <div className="h-screen flex flex-col">
             <Header />
-            <div className="flex items-center justify-center min-h-screen bg-gray-100 text-black">
+            <div className="flex items-center justify-center h-screen bg-gray-100 text-black">
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
                     <h1 className="text-xl font-semibold text-center mb-4">Редактирование статуса</h1>
 
