@@ -93,9 +93,9 @@ export default function TicketPage() {
 
 
     return (
-        <div>
+        <div className="h-screen flex flex-col">
             <Header/>
-            <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
+            <div className="h-screen flex justify-center items-center bg-gray-100 p-6">
                 <div className="w-full max-w-xl bg-white shadow-md rounded-lg p-6 h-auto max-h-[80vh] overflow-auto">
                     <h1 className="text-3xl font-bold text-black text-center mb-6">Заявка</h1>
 
