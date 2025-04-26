@@ -69,21 +69,22 @@ export default function HistoryPage() {
     }
 
     return (
-        <div>
+        <div className="bg-[#03062c] min-h-screen flex flex-col">
             <Header/>
-            <div className="min-h-screen bg-gray-100 p-6">
+            <div className="p-6">
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-3xl font-bold text-black mb-6 text-center">История выполненных заявок</h1>
+                    <h1 className="text-3xl font-bold text-white mb-6 text-center">История выполненных заявок</h1>
 
                     {message && <p className="text-red-500 text-center">{message}</p>}
 
-                    <div className="mb-6 text-center text-black">
+                    <div className="mb-6 text-center text-white ">
                         <input
                             type="text"
                             placeholder="Поиск по названию, теме или дате..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full max-w-md p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="bg-[#1E1E2E] w-full max-w-md p-2 border border-[#3C4FDD] hover:border-[#5C6FFF] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
+
                         />
                     </div>
 
@@ -99,13 +100,14 @@ export default function HistoryPage() {
                                 <Link
                                     href={`/ticket_page/${ticket.uuid}`}
                                     key={ticket.uuid}
-                                    className="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-all border border-gray-300 flex flex-col justify-between"
+                                    className="bg-[#1a1d45] rounded-lg shadow-md p-5 border border-blue-500 hover:border-[#5C6FFF] hover:shadow-lg hover:scale-105 transition-all duration-300 flex flex-col justify-between"
+
                                 >
                                     <div>
-                                        <h2 className="text-lg font-bold text-black mb-2">{ticket.title}</h2>
-                                        <p className="text-sm text-gray-600 mb-1">
+                                        <h2 className="text-lg font-bold text-white mb-2">{ticket.title}</h2>
+                                        <p className="text-sm text-white mb-1">
                                             <strong>Тема:</strong> {ticket.topic_id}</p>
-                                        <p className="text-sm text-gray-600 mb-3">
+                                        <p className="text-sm text-white mb-3">
                                             <strong>Дата:</strong>{" "}
                                             {ticket.create_at ? new Date(ticket.create_at).toLocaleString("ru-RU", {
                                                 dateStyle: "long",

@@ -78,7 +78,7 @@ export default function TicketsPage() {
                                 <Link
                                     href={`/ticket_page/${ticket.uuid}`}
                                     key={ticket.uuid}
-                                    className="bg-[#1a1d45] rounded-lg shadow-md p-5 hover:shadow-lg transition-all border border-blue-500 flex flex-col justify-between"
+                                    className="bg-[#1a1d45] rounded-lg shadow-md p-5 border border-blue-500 hover:border-[#5C6FFF] hover:shadow-lg hover:scale-105 transition-all duration-300 flex flex-col justify-between"
                                 >
                                     <div>
                                         <h2 className="text-lg font-bold text-white mb-2">{ticket.title}</h2>
