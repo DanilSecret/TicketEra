@@ -10,6 +10,7 @@ import Image from "next/image";
 import {useUserStore} from "@/store/user_store";
 import {useRouter} from "next/navigation";
 import Header from "@/app/components/header";
+import userIcon from "@/app/assets/user.svg";
 
 
 export default function UserProfile() {
@@ -71,17 +72,23 @@ export default function UserProfile() {
     }
 
     return (
-        <div>
+        <div className="bg-[#03062c] min-h-screen flex flex-col">
             <Header/>
-            <div className="min-h-screen bg-gray-100 p-6">
-                <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-                    <h1 className="text-3xl font-bold text-black mb-6 text-center">Мой профиль и заявки</h1>
+            <div className="p-6">
+                <div className="border border-blue-500 max-w-4xl mx-auto bg-[#03062c] shadow-md rounded-lg p-6">
+                    <h1 className="text-3xl font-bold text-white mb-6 text-center">Мой профиль и заявки</h1>
                     {message && <p className="text-red-500 text-center">{message}</p>}
 
                     {userData ? (
-                        <div className="bg-gray-50 p-5 rounded-lg shadow-sm mb-6 border border-gray-300">
-                            <h2 className="text-xl font-semibold text-black">Информация о пользователе</h2>
-                            <div className="mt-3 text-sm text-gray-600">
+                        <div className="flex items-center p-6 rounded-xl shadow-sm mb-8 bg-[#1a1d45] rounded-lg shadow-md p-5 border border-blue-500 ">
+                            <Image
+                                src={userIcon}
+                                alt="User Icon"
+                                width={70}
+                                height={70}
+                                className="rounded-full mr-6"
+                            />
+                            <div className="space-y-2 text-white">
                                 <p><strong>Никнейм:</strong> {userData.username}</p>
                                 <p><strong>Почта:</strong> {userData.email}</p>
                                 <p><strong>Роль:</strong> {userData.role}</p>
@@ -91,7 +98,7 @@ export default function UserProfile() {
                         <p className="text-gray-600 text-center text-lg">Не удалось загрузить информацию о
                             пользователе.</p>
                     )}
-                    <h2 className="text-2xl font-bold text-black mb-6 text-center">Заявки:</h2>
+                    <h2 className="text-2xl font-bold text-white mb-6 text-center">Заявки:</h2>
                     {loadingTickets ? (
                         <div className="flex justify-center items-center py-10">
                             <div
@@ -103,10 +110,10 @@ export default function UserProfile() {
                         <div className="space-y-4">
                             {data.slice().reverse().map((ticket) => (
                                 <div key={ticket.uuid}
-                                     className="border border-gray-300 rounded-lg p-5 shadow-md bg-gray-50 hover:shadow-lg transition-all mb-3 relative">
+                                     className="border border-blue-500  rounded-lg p-5 shadow-md bg-[#1a1d45]  hover:shadow-lg transition-all mb-3 relative">
                                     <Link href={`/ticket_page/${ticket.uuid}`}>
-                                        <h2 className="text-xl font-bold text-black">{ticket.title}</h2>
-                                        <div className="mt-3 text-sm text-gray-600">
+                                        <h2 className="text-xl font-bold text-white">{ticket.title}</h2>
+                                        <div className="mt-3 text-sm text-white">
                                             <p><strong>Тема:</strong> {ticket.topic_id}</p>
                                             <p>
                                                 <strong>Дата: </strong>
@@ -125,7 +132,7 @@ export default function UserProfile() {
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(ticket.uuid)}
-                                        className="absolute top-2 right-2 text-white px-2 py-1 rounded-lg text-sm hover:bg-gray-200 transition"
+                                        className="absolute top-2 right-2 text-white px-2 py-1 rounded-lg text-sm hover:bg-[#BE123C] transition"
                                     >
                                         <Image className="w-[20px]" src={deleteImg} alt={"delete"}/>
                                     </button>
